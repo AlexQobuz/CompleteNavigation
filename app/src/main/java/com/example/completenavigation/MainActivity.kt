@@ -3,6 +3,7 @@ package com.example.completenavigation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.completenavigation.home.HomeFragment
 import com.example.completenavigation.post.PostsFragment
 import com.example.completenavigation.user.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +22,10 @@ class MainActivity : AppCompatActivity() {
         bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav.setOnItemSelectedListener {
             when (it.itemId){
+                R.id.home -> {
+                    loadFragment(HomeFragment())
+                    true
+                }
                 R.id.users -> {
                     loadFragment(UserFragment())
                     true
@@ -30,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    loadFragment(UserFragment())
+                    loadFragment(HomeFragment())
                     true
                 }
             }
