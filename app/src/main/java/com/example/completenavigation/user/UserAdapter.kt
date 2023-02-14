@@ -12,23 +12,24 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
 
-class UserAdapter(val context: Context):
+class UserAdapter(val context: Context, val itemClickListener: View.OnClickListener):
     RecyclerView.Adapter<UserAdapter.ViewHolder>(){
 
     private val usersList: MutableList<User> = mutableListOf()
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        //var userId: TextView
+        var userId: TextView
         var name: TextView
         var username: TextView
-        //var email: TextView
-        //val cardView = itemView.findViewById<CardView>(R.id.card_view_item_user)
+        var email: TextView
+        var cardView = itemView.findViewById<CardView>(R.id.card_view_item_user)
 
         init {
             name = itemView.findViewById(R.id.name_user)
             username = itemView.findViewById(R.id.username_user)
-            //userId = itemView.findViewById(R.id.id_fragment_user_detail)
-            //email = itemView.findViewById(R.id.email_fragment_user_detail)
+            userId = itemView.findViewById(R.id.id_fragment_user_detail)
+            email = itemView.findViewById(R.id.email_fragment_user_detail)
+            cardView = itemView.findViewById(R.id.card_view_item_user)
         }
     }
 
@@ -40,14 +41,13 @@ class UserAdapter(val context: Context):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = usersList[position]
-        //holder.cardView.tag = position
-        //holder.userId.text = user.id.toString()
+        holder.cardView.setOnClickListener(itemClickListener)
+        holder.userId.text = user.id.toString()
         holder.name.text = user.name
         holder.username.text = user.username
-        //holder.email.text = user.email
+        holder.email.text = user.email
 
         //holder.cardView.setOnClickListener(itemClickListener)
-
 
     }
 
