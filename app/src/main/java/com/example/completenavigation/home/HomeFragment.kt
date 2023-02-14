@@ -40,13 +40,11 @@ class HomeFragment : Fragment() {
         recyclerViewImgHome = view.findViewById(R.id.recyclerview_photos_home)
         recyclerViewImgHome.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(requireContext())
-
         recyclerViewImgHome.layoutManager = linearLayoutManager
+
         myHomeAdapter = HomeAdapter(requireContext())
-
         recyclerViewImgHome.adapter = myHomeAdapter
-
-        getImgHome()
+        //getImgHome()
         getPostsHome()
         getUsersHome()
 

@@ -45,7 +45,6 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
         //holder.id.text = photo.id.toString()
         //holder.title.text = photo.title
         //holder.url = photo.url
-
         Glide.with(holder.itemView.context)
             .load(photo.url)
             .into(holder.url)
