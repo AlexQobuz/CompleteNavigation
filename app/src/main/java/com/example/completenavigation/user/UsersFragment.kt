@@ -1,5 +1,6 @@
 package com.example.completenavigation.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
+import com.example.completenavigation.user.UserDetailActivity.Companion.EXTRA_USER
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +41,12 @@ class UserFragment : Fragment() {
         linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerViewUsers.layoutManager = linearLayoutManager
 
-        myAdapter = UserAdapter(requireContext())
+        myAdapter = UserAdapter(requireContext(), onClick = { user ->
+            Log.d("UseerFragment", "Salut")
+            val intent = Intent(requireContext(), UserDetailActivity::class.java)
+            intent.putExtra(EXTRA_USER, user)
+            requireActivity().startActivity(intent)
+        })
         recyclerViewUsers.adapter = myAdapter
         getUsers()
 
