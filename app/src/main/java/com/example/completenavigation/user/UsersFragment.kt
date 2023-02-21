@@ -41,8 +41,10 @@ class UserFragment : Fragment() {
         linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerViewUsers.layoutManager = linearLayoutManager
 
+        // Ici je réutilise la fonction
+        // lambda pour l'événement au click
         myAdapter = UserAdapter(requireContext(), onClick = { user ->
-            Log.d("UseerFragment", "Salut")
+            Log.d("UserFragment", "Salut")
             val intent = Intent(requireContext(), UserDetailActivity::class.java)
             intent.putExtra(EXTRA_USER, user)
             requireActivity().startActivity(intent)
