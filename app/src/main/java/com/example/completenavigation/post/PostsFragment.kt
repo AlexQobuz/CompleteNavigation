@@ -1,5 +1,6 @@
 package com.example.completenavigation.post
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
+import com.example.completenavigation.post.PostDetailActivity.Companion.EXTRA_POST
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +41,15 @@ class PostsFragment : Fragment() {
         linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerViewUsers.layoutManager = linearLayoutManager
 
-        myPostAdapter = PostAdapter(requireContext())
+        // il faut que je passe en paramètre
+        // la fonction lambda que j'ai créé
+        // dans PostAdapter
+        myPostAdapter = PostAdapter(requireContext(), onClick = {post ->
+            Log.d("PostFragment", "J'ai cliqué sur un post !")
+            val intent = Intent(requireContext(), PostDetailActivity::class.java)
+            intent.putExtra(EXTRA_POST, post)
+            requireActivity().startActivity(intent)
+        })
         recyclerViewUsers.adapter = myPostAdapter
         getPosts()
 
