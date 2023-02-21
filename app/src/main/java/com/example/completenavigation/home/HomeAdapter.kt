@@ -22,13 +22,13 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
         //var albumId: TextView
         //var id: TextView
         //var title: TextView
-        val url: ImageView
+        //val url: ImageView
 
         init {
             //albumId = itemView.findViewById(R.id.albumId_photo)
             //id = itemView.findViewById(R.id.albumId_photo)
             //title = itemView.findViewById(R.id.albumId_photo)
-            url = itemView.findViewById(R.id.img_item_recyclerview_home)
+            //url = itemView.findViewById(R.id.img_item_recyclerview_home)
         }
     }
 
@@ -45,9 +45,9 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
         //holder.id.text = photo.id.toString()
         //holder.title.text = photo.title
         //holder.url = photo.url
-        Glide.with(holder.itemView.context)
+        /**Glide.with(holder.itemView.context)
             .load(photo.url)
-            .into(holder.url)
+            .into(holder.url)*/
     }
 
     override fun getItemCount(): Int {
