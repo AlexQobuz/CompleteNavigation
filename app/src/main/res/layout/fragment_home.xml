@@ -7,24 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="#fff"
+        app:title="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_photos_home"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="16dp"
+        android:background="#8E6666"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/home_img_item_recyclerview"
-        android:orientation="horizontal"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:listitem="@layout/home_img_item_recyclerview" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_posts_home"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ic_posts_black_24"
+        android:layout_margin="16dp"
+        android:background="#8E6666"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview_photos_home"
@@ -36,8 +46,8 @@
         android:id="@+id/recyclerview_users_home"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/black"
+        android:layout_margin="16dp"
+        android:background="#8E6666"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview_posts_home"
