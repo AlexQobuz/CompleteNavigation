@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadFragment(UserFragment())
+        loadFragment(HomeFragment())
         bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav.setOnItemSelectedListener {
             when (it.itemId){
@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
 

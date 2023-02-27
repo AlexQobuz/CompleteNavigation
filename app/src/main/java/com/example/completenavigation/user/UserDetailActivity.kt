@@ -3,6 +3,7 @@ package com.example.completenavigation.user
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toolbar
 import com.example.completenavigation.R
 
 class UserDetailActivity : AppCompatActivity() {
@@ -22,6 +23,11 @@ class UserDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
 
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
         user = intent.getParcelableExtra<User>(EXTRA_USER)!!
         userIndex = intent.getIntExtra(EXTRA_USER_INDEX, -1)
 
@@ -31,7 +37,6 @@ class UserDetailActivity : AppCompatActivity() {
         nameTextView.text = user.name
         usernameTextView.text = user.username
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
     }
 

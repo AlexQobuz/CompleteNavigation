@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
@@ -19,11 +22,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-class UserFragment : Fragment() {
+class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
 
     lateinit var myAdapter: UserAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var recyclerViewUsers: RecyclerView
+    // Déclarer le dispatcher de retour en arrière
+    private lateinit var backPressedDispatcher: OnBackPressedDispatcher
 
     /**
      * le fragment a été instancié et
@@ -31,10 +36,22 @@ class UserFragment : Fragment() {
      * Cependant, la vue correspondante
      * n'a pas encore été créée.
      */
-    /**override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-    }*/
+        // Obtenir le dispatcher de retour en arrière de l'activité parente
+        backPressedDispatcher = requireActivity().onBackPressedDispatcher
+
+        // Ajouter un rappel à la pile de rappels de retour en arrière
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Gérer l'événement de retour en arrière ici
+                // Par exemple, naviguer vers le fragment précédent
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+        backPressedDispatcher.addCallback(this, callback)
+    }
 
     /**
      * cette méthode vous permet de
@@ -154,4 +171,13 @@ class UserFragment : Fragment() {
 
         })
     }
+
+    /**fun onBackPressedDispatcher(): OnBackPressedDispatcher {
+        return backPressedDispatcher
+    }*/
+
+    override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
+        return backPressedDispatcher
+    }
+
 }
