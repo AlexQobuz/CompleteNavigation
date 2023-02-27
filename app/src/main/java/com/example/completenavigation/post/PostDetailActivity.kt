@@ -31,7 +31,26 @@ class PostDetailActivity : AppCompatActivity() {
         titleTextView.text = post.title
         bodyTextView.text = post.body
 
+        /**
+         * Je déclare la toolbar pour pouvoir l'utiliser
+         */
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        // défini la toolbar pour l'utiliser
+        setSupportActionBar(toolbar)
+        // Affiche la toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+    }
+
+    /**
+     * méthode pour pouvoir utiliser le bouton back.
+     * Cela permet de garder la hiérarchie si les activité
+     * sont déclaré dans le manifest
+     */
+    override fun onSupportNavigateUp(): Boolean {
+
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
 }

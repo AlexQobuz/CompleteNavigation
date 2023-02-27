@@ -40,6 +40,11 @@ class UserDetailActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * méthode pour pouvoir utiliser le bouton back.
+     * Cela permet de garder la hiérarchie si les activité
+     * sont déclaré dans le manifest
+     */
     override fun onSupportNavigateUp(): Boolean {
 
         onBackPressed()
