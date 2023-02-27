@@ -31,6 +31,14 @@ class UserDetailActivity : AppCompatActivity() {
         nameTextView.text = user.name
         usernameTextView.text = user.username
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
 }
