@@ -15,6 +15,10 @@ import com.example.completenavigation.R
 class UserAdapter(val context: Context, val onClick:(User) -> Unit):
     RecyclerView.Adapter<UserAdapter.ViewHolder>(){
 
+    /**
+     * J'initialise ma variable usersList
+     * et je lui assigne une liste qui peut être modifier
+     */
     private val usersList: MutableList<User> = mutableListOf()
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -41,7 +45,7 @@ class UserAdapter(val context: Context, val onClick:(User) -> Unit):
         holder.username.text = user.username
 
         holder.cardView.setOnClickListener {
-            Log.d("UserFragment", "Hello")
+            Log.d("UserFragment", "Click sur un utilisateur de la liste")
             onClick(user)
         }
 

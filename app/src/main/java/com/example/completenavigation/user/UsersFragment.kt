@@ -13,7 +13,7 @@ import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
-import com.example.completenavigation.user.UserDetailActivity.Companion.EXTRA_USER
+import com.example.completenavigation.user.UserDetailFragment.Companion.EXTRA_USER
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -84,8 +84,8 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
         // Ici je réutilise la fonction
         // lambda pour l'événement au click
         myAdapter = UserAdapter(requireContext(), onClick = { user ->
-            Log.d("UserFragment", "Salut")
-            val intent = Intent(requireContext(), UserDetailActivity::class.java)
+            Log.d("UserFragment", "Logique du click")
+            val intent = Intent(requireContext(), UserDetailFragment::class.java)
             intent.putExtra(EXTRA_USER, user)
             requireActivity().startActivity(intent)
         })

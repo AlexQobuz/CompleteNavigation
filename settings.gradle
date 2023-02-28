@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CompleteNavigation"
-include ':app'
+include ':app', ':module_de_ressources'
