@@ -1,14 +1,12 @@
 package com.example.completenavigation.user
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
 
@@ -29,7 +27,7 @@ class UserAdapter(val context: Context, val onClick:(User) -> Unit):
         init {
             name = itemView.findViewById(R.id.name_user)
             username = itemView.findViewById(R.id.username_user)
-            cardView = itemView.findViewById(R.id.card_view_item_user)
+            //cardView = itemView.findViewById(R.id.card_view_item_user)
         }
     }
 
