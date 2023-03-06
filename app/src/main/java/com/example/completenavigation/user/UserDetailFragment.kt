@@ -25,6 +25,7 @@ class UserDetailFragment : Fragment() {
     lateinit var nameTextView: TextView
     lateinit var usernameTextView: TextView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -52,9 +53,7 @@ class UserDetailFragment : Fragment() {
         return view
     }
 
-    }
-
-     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar_user_detail)
@@ -62,5 +61,5 @@ class UserDetailFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
-
 }
+

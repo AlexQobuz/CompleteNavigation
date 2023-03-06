@@ -85,9 +85,14 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
         // lambda pour l'événement au click
         myAdapter = UserAdapter(requireContext(), onClick = { user ->
             Log.d("UserFragment", "Logique du click")
-            val intent = Intent(requireContext(), UserDetailFragment::class.java)
-            intent.putExtra(EXTRA_USER, user)
-            requireActivity().startActivity(intent)
+            val fragment = UserDetailFragment()
+            val args = Bundle()
+            args.putParcelable(EXTRA_USER, user)
+            fragment.arguments = args
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container_fragment, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         })
         recyclerViewUsers.adapter = myAdapter
         getUsers()
@@ -171,10 +176,6 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
 
         })
     }
-
-    /**fun onBackPressedDispatcher(): OnBackPressedDispatcher {
-        return backPressedDispatcher
-    }*/
 
     override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
         return backPressedDispatcher
