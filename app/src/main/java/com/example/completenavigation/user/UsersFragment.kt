@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
 import com.example.completenavigation.user.UserDetailFragment.Companion.EXTRA_USER
 
-const val BASE_URL = "https://jsonplaceholder.typicode.com/"
-
 class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
 
     lateinit var myAdapter: UserAdapter
@@ -107,7 +105,7 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
         })
 
         // Appeler getUsers() pour récupérer les données
-        viewModel.getUsers()
+        //viewModel.getUsers()
 
     }
 
