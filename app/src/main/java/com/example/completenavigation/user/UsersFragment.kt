@@ -1,6 +1,5 @@
 package com.example.completenavigation.user
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,15 +9,13 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
 import com.example.completenavigation.user.UserDetailFragment.Companion.EXTRA_USER
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
@@ -29,6 +26,8 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
     lateinit var recyclerViewUsers: RecyclerView
     // Déclarer le dispatcher de retour en arrière
     private lateinit var backPressedDispatcher: OnBackPressedDispatcher
+    private val usersViewModel: UsersViewModel by viewModels()
+    private lateinit var viewModel: UsersViewModel
 
     /**
      * le fragment a été instancié et
@@ -95,7 +94,20 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
             transaction.commit()
         })
         recyclerViewUsers.adapter = myAdapter
-        getUsers()
+
+        // Je créer une instance de "UserViewModel" en utilisant "viewModelProvider..."
+        viewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
+        /**
+         * Observer les mises à jour de la liste d'utilisateurs
+         * Ici, userListLilveData est une instance de "MutableLiveData" dans "UserViewModel"
+         * qui est une mise à jour de cette variable LiveData.
+         */
+        viewModel.userListLiveData.observe(viewLifecycleOwner, { userList ->
+            myAdapter.setItems(userList)
+        })
+
+        // Appeler getUsers() pour récupérer les données
+        viewModel.getUsers()
 
     }
 
@@ -154,7 +166,7 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
     /**
      * Fonction qui utilise retrofit pour le call API
      */
-    private fun getUsers() {
+    /**private fun getUsers() {
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -175,7 +187,7 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
             }
 
         })
-    }
+    }*/
 
     override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
         return backPressedDispatcher
