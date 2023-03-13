@@ -20,6 +20,9 @@ class UserRepository {
         .build()
         .create(UserInterface::class.java)
 
+    /**
+     * Fonction qui utilise retrofit pour le call API
+     */
     fun getAllUsers(): LiveData<List<User>> {
         val userListLiveData = MutableLiveData<List<User>>()
 
@@ -39,32 +42,5 @@ class UserRepository {
 
         return userListLiveData
     }
-
-    /**
-     * Fonction qui utilise retrofit pour le call API
-     */
-    /**fun getUsers() {
-        if (!::retrofitBuilder.isInitialized){
-            retrofitBuilder = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(UserInterface::class.java)
-        }
-
-        val retrofitData = retrofitBuilder.getAllUsers()
-
-        retrofitData.enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                val responseBody = response.body()!!
-                userListLiveData.value = responseBody
-            }
-
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Log.d("Activity main","Les users ne peuvent pas être afficher suite à un problème !"+t.message )
-            }
-
-        })
-    }*/
 
 }
