@@ -1,30 +1,59 @@
 package com.example.completenavigation.post
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
 import com.example.completenavigation.post.PostDetailFragment.Companion.EXTRA_POST
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "https://jsonplaceholder.typicode.com/"
-
-class PostsFragment : Fragment() {
+class PostsFragment : Fragment(), OnBackPressedDispatcherOwner {
 
     lateinit var myPostAdapter: PostAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var recyclerViewUsers: RecyclerView
+    // Déclarer le dispatcher de retour en arrière
+    private lateinit var backPressedDispatcher: OnBackPressedDispatcher
+    private val postsViewModel: PostsViewModel by viewModels()
+    private lateinit var viewModel: PostsViewModel
 
+    /**
+     * le fragment a été instancié et
+     * présente l'état CREATED.
+     * Cependant, la vue correspondante
+     * n'a pas encore été créée.
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Obtenir le dispatcher de retour en arrière de l'activité parente
+        backPressedDispatcher = requireActivity().onBackPressedDispatcher
+
+        // Ajouter un rappel à la pile de rappels de retour en arrière
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Gérer l'événement de retour en arrière ici
+                // Par exemple, naviguer vers le fragment précédent
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+        backPressedDispatcher.addCallback(this, callback)
+    }
+
+    /**
+     * cette méthode vous permet de
+     * gonfler la mise en page.
+     * Le fragment est passé à l'état CREATED
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +62,13 @@ class PostsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_posts, container, false)
     }
 
+    /**
+     * cette méthode est appelée après la
+     * création de la vue.
+     * Avec cette méthode, vous appelez
+     * généralement findViewById()
+     * pour lier des vues spécifiques à des propriétés.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,7 +93,18 @@ class PostsFragment : Fragment() {
             transaction.commit()
         })
         recyclerViewUsers.adapter = myPostAdapter
-        getPosts()
+
+        // Je créer une instance de "UserViewModel" en utilisant "viewModelProvider..."
+        viewModel = ViewModelProvider(this).get(PostsViewModel::class.java)
+        /**
+         * Observer les mises à jour de la liste de posts
+         * Ici, postListLiveData est une instance de "MutableLiveData" dans "PostsViewModel"
+         * qui est une mise à jour de cette variable LiveData.
+         */
+
+        viewModel.postListLiveData.observe(viewLifecycleOwner, { postList ->
+            myPostAdapter.setItems(postList)
+        })
 
     }
 
@@ -113,27 +160,8 @@ class PostsFragment : Fragment() {
         super.onDestroy()
     }
 
-    private fun getPosts() {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(com.example.completenavigation.user.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(PostInterface::class.java)
-
-        val retrofitData = retrofitBuilder.getAllPosts()
-
-        retrofitData.enqueue(object : Callback<List<Post>> {
-            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
-                val responseBody = response.body()!!
-
-                myPostAdapter.setItems(responseBody)
-            }
-
-            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                Log.d("Activity main","Les users ne peuvent pas être afficher suite à un problème !"+t.message )
-            }
-
-        })
+    override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
+        return backPressedDispatcher
     }
 
 }
