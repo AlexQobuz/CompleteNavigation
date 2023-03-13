@@ -2,7 +2,6 @@ package com.example.completenavigation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.completenavigation.home.HomeFragment
 import com.example.completenavigation.post.PostsFragment
@@ -24,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Activer la flèche de retour dans la toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         loadFragment(HomeFragment())
         bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
@@ -47,8 +49,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
 

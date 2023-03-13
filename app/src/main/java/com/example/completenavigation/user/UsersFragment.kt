@@ -104,9 +104,6 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
             myAdapter.setItems(userList)
         })
 
-        // Appeler getUsers() pour récupérer les données
-        //viewModel.getUsers()
-
     }
 
     /**
@@ -160,32 +157,6 @@ class UserFragment : Fragment(), OnBackPressedDispatcherOwner {
     override fun onDestroy() {
         super.onDestroy()
     }
-
-    /**
-     * Fonction qui utilise retrofit pour le call API
-     */
-    /**private fun getUsers() {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(UserInterface::class.java)
-
-        val retrofitData = retrofitBuilder.getAllUsers()
-
-        retrofitData.enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                val responseBody = response.body()!!
-
-                myAdapter.setItems(responseBody)
-            }
-
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Log.d("Activity main","Les users ne peuvent pas être afficher suite à un problème !"+t.message )
-            }
-
-        })
-    }*/
 
     override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
         return backPressedDispatcher
