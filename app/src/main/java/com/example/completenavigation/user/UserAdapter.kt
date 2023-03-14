@@ -19,6 +19,11 @@ class UserAdapter(val context: Context, val onClick:(User) -> Unit):
      */
     private val usersList: MutableList<User> = mutableListOf()
 
+    /**
+     * Le ViewHolder est une classe qui est responsable
+     * de la création et de la gestion des vues individuelles
+     * qui apparaissent dans la liste
+     */
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.name_user)
         var username: TextView = itemView.findViewById(R.id.username_user)

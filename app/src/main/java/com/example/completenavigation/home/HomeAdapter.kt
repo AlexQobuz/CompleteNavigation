@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.completenavigation.R
-import com.example.completenavigation.post.Post
-import com.example.completenavigation.user.User
 
 class HomeAdapter(val context: Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     private val photosList: MutableList<Photo> = mutableListOf()
 
+    /**
+     * Le ViewHolder est une classe qui est responsable
+     * de la création et de la gestion des vues individuelles
+     * qui apparaissent dans la liste
+     */
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var photos: ImageView = itemView.findViewById(R.id.img_item_recyclerview_home)

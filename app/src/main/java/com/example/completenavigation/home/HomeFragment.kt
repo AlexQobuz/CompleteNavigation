@@ -19,7 +19,6 @@ class HomeFragment : Fragment(), OnBackPressedDispatcherOwner {
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var recyclerViewImgHome: RecyclerView
     private lateinit var backPressedDispatcher : OnBackPressedDispatcher
-    //private val PhotoViewModel : PhotoViewModel by viewModels()
     private lateinit var viewModel: PhotoViewModel
 
     /**
