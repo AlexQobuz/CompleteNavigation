@@ -1,31 +1,56 @@
 package com.example.completenavigation.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.completenavigation.R
-import com.example.completenavigation.post.Post
-import com.example.completenavigation.user.BASE_URL
-import com.example.completenavigation.user.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnBackPressedDispatcherOwner {
 
     lateinit var myHomeAdapter: HomeAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var recyclerViewImgHome: RecyclerView
-    //lateinit var recyclerViewPostsHome: RecyclerView
-    //lateinit var recyclerViewUsersHome: RecyclerView
+    private lateinit var backPressedDispatcher : OnBackPressedDispatcher
+    //private val PhotoViewModel : PhotoViewModel by viewModels()
+    private lateinit var viewModel: PhotoViewModel
 
+    /**
+     * le fragment a été instancié et
+     * présente l'état CREATED.
+     * Cependant, la vue correspondante
+     * n'a pas encore été créée.
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Obtenir le dispatcher de retour en arrière de l'activité parente
+        backPressedDispatcher = requireActivity().onBackPressedDispatcher
+
+        // Ajouter un rappel à la pile de rappels de retour en arrière
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Gérer l'événement de retour en arrière ici
+                // Par exemple, naviguer vers le fragment précédent
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+        backPressedDispatcher.addCallback(this, callback)
+    }
+
+
+    /**
+     * cette méthode vous permet de
+     * gonfler la mise en page.
+     * Le fragment est passé à l'état CREATED
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +59,13 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    /**
+     * cette méthode est appelée après la
+     * création de la vue.
+     * Avec cette méthode, vous appelez
+     * généralement findViewById()
+     * pour lier des vues spécifiques à des propriétés.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,81 +74,79 @@ class HomeFragment : Fragment() {
         linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerViewImgHome.layoutManager = linearLayoutManager
 
+        // Ici je réutilise la fonction
+        // lambda pour l'évènement au click
         myHomeAdapter = HomeAdapter(requireContext())
+
         recyclerViewImgHome.adapter = myHomeAdapter
-        //getImgHome()
-        getPostsHome()
-        getUsersHome()
+
+        // Je créer une instance de "PhotoViewModle" en utilisant "viewModelProvider..."
+        viewModel = ViewModelProvider(this).get(PhotoViewModel::class.java)
+        /**
+         * Observer les mises à jour de la liste de photos
+         * Ici, photoListLiveData est une instance de "MutableLiveData" dans "PhotoViewModel"
+         * qui est une mise à jour de cette variable LiveData.
+         */
+        viewModel.photoListLiveData.observe(viewLifecycleOwner, { photoList ->
+            myHomeAdapter.setPhotosHomeAdapter(photoList)
+        })
 
     }
 
-    private fun getImgHome() {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(HomeInterface::class.java)
-
-        val retrofitData = retrofitBuilder.getAllPhotos()
-
-        retrofitData.enqueue(object : Callback<List<Photo>> {
-            override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
-                val responseBody = response.body()!!
-
-                myHomeAdapter.setPhotosHomeAdapter(responseBody)
-            }
-
-            override fun onFailure(call: Call<List<Photo>>, t: Throwable) {
-                Log.d("Activity main","Les users ne peuvent pas être afficher suite à un problème !"+t.message )
-            }
-
-        })
+    /**
+     * le fragment est passé à l'état STARTED.
+     */
+    override fun onStart() {
+        super.onStart()
     }
 
-    private fun getPostsHome() {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(HomeInterface::class.java)
-
-        val retrofitData = retrofitBuilder.getAllPosts()
-
-        retrofitData.enqueue(object : Callback<List<Post>> {
-            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
-                val responseBody = response.body()!!
-
-                myHomeAdapter.setPostsHomeAdapter(responseBody)
-            }
-
-            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                Log.d("Activity main","Les users ne peuvent pas être afficher suite à un problème !"+t.message )
-            }
-
-        })
+    /**
+     * le fragment est passé à l'état
+     * RESUMED et est désormais actif
+     * (peut répondre à l'entrée utilisateur).
+     */
+    override fun onResume() {
+        super.onResume()
     }
 
-    private fun getUsersHome() {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(HomeInterface::class.java)
+    /**
+     * le fragment est revenu à l'état STARTED.
+     * L'utilisateur peut voir l'interface utilisateur.
+     */
+    override fun onPause() {
+        super.onPause()
+    }
 
-        val retrofitData = retrofitBuilder.getAllUsers()
+    /**
+     * le fragment est revenu à l'état
+     * CREATED.
+     * L'objet est instancié,
+     * mais n'est plus affiché à l'écran.
+     */
+    override fun onStop() {
+        super.onStop()
+    }
 
-        retrofitData.enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                val responseBody = response.body()!!
+    /**
+     * appelé juste avant que le
+     * fragment passe à l'état DESTROYED.
+     * La vue a déjà été supprimée
+     * de la mémoire,
+     * mais l'objet fragment existe toujours.
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
-                myHomeAdapter.setUsersHomeAdapter(responseBody)
-            }
+    /**
+     * le fragment passe à l'état DESTROYED.
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Log.d("Activity main","Les users ne peuvent pas être afficher suite à un problème !"+t.message )
-            }
-
-        })
+    override fun getOnBackPressedDispatcher(): OnBackPressedDispatcher {
+        return backPressedDispatcher
     }
 
 }

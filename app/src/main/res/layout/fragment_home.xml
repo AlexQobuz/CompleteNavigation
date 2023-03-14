@@ -23,8 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="16dp"
-        android:layout_marginTop="52dp"
-        android:background="#8E6666"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -32,31 +31,6 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:listitem="@layout/home_img_item_recyclerview" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_posts_home"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
-        android:background="#8E6666"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview_photos_home"
-        tools:listitem="@layout/home_posts_item_recyclerview"
-        android:orientation="horizontal"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_users_home"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
-        android:background="#8E6666"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview_posts_home"
-        tools:listitem="@layout/home_users_item_recyclerview"
-        android:orientation="horizontal"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

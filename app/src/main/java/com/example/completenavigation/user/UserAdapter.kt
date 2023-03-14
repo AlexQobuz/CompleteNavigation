@@ -15,27 +15,20 @@ class UserAdapter(val context: Context, val onClick:(User) -> Unit):
 
     /**
      * J'initialise ma variable usersList
-     * et je lui assigne une liste qui peut être modifier
+     * avec une MutableList
      */
     private val usersList: MutableList<User> = mutableListOf()
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var name: TextView
-        var username: TextView
+        var name: TextView = itemView.findViewById(R.id.name_user)
+        var username: TextView = itemView.findViewById(R.id.username_user)
         var cardView = itemView.findViewById<CardView>(R.id.card_view_item_user)
-
-        init {
-            name = itemView.findViewById(R.id.name_user)
-            username = itemView.findViewById(R.id.username_user)
-            //cardView = itemView.findViewById(R.id.card_view_item_user)
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.item_users_list, parent, false)
         return ViewHolder(itemView)
     }
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = usersList[position]
