@@ -7,28 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="#fff"
-        app:title="Home"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_photos_home"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:listitem="@layout/home_img_item_recyclerview" />
 
 

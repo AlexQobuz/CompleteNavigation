@@ -54,7 +54,7 @@ class PostDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar_post_detail)
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
