@@ -16,7 +16,9 @@
         app:title="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/ToolbarTheme"
+        />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_fragment"

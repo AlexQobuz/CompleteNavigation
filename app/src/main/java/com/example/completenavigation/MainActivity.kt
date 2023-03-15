@@ -2,6 +2,8 @@ package com.example.completenavigation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.completenavigation.home.HomeFragment
 import com.example.completenavigation.post.PostsFragment
@@ -11,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNav: BottomNavigationView
+    val homeFragment = HomeFragment()
 
     /**
      * Dans la méthode onCreated : les opérations servent à mettre en place
@@ -24,15 +27,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         // Activer la flèche de retour dans la toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        loadFragment(HomeFragment())
+        loadFragment(homeFragment)
         bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav.setOnItemSelectedListener {
             when (it.itemId){
                 R.id.home -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(homeFragment)
                     true
                 }
                 R.id.users -> {
@@ -44,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(homeFragment)
                     true
                 }
             }
@@ -109,8 +114,19 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container_fragment, fragment)
         transaction.setReorderingAllowed(true)
-        transaction.addToBackStack(HomeFragment().toString())
+        transaction.addToBackStack(null)// Ne pas ajouter à la pile avec addToBackStack()
         transaction.commit()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                // Gérer le retour en arrière
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }
